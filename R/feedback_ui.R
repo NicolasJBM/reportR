@@ -45,7 +45,7 @@ feedback_ui <- function(id){
               style = "background-color:#330066;color:#FFF;width:100%;margin-bottom:10px;"
             ),
             shiny::actionButton(
-              ns("openfolder"), "Open folder", icon = shiny::icon("folder-open"),
+              ns("opentestfolder"), "Open folder", icon = shiny::icon("folder-open"),
               title = "Open the credentials folder to add or edit credentials.",
               style = "background-color:#660000;color:#FFF;width:100%;margin-bottom:10px;"
             )

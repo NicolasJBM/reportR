@@ -217,7 +217,7 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
     ############################################################################
     # Creation
     
-    shiny::observeEvent(input$new_feedback, {
+    shiny::observeEvent(input$newfeedback, {
       generic_template_names <- modrval$feedback_templates |>
         stringr::str_remove_all("^feedback_.._") |>
         stringr::str_remove_all(".Rmd$") |>
@@ -248,7 +248,7 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       shinyalert::shinyalert(
         "Are you sure?",
         "Creating a new feedback based on a template will overwrite any existing file.",
-        inputId = ns("createfeedback"),
+        inputId = "createfeedback",
         type = "warning", closeOnEsc = FALSE, closeOnClickOutside = TRUE
       )
     })
@@ -281,8 +281,8 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
           selected_templates
         )
         tofiles <- base::paste0(
-          "path/to/other/folder",
-          "/",
+          modrval$test_path,
+          "/9_feedback/",
           stringr::str_extract(selected_templates, "^feedback_.."),
           ".Rmd"
         )
@@ -297,11 +297,28 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
           "Templates of feedback have been added to your test. Cycle through students to see them.",
           type = "success", closeOnEsc = FALSE, closeOnClickOutside = TRUE
         )
-      }else {
+      } else {
         shinyalert::shinyalert(
           "Feedback templates not imported!",
           "Sorry. No templated seemed to match exactly your selection.",
           type = "error", closeOnEsc = FALSE, closeOnClickOutside = TRUE
+        )
+      }
+    })
+    
+    shiny::observeEvent(input$opentestfolder, {
+      shiny::req(base::dir.exists(modrval$test_path))
+      folder <- modrval$test_path
+      if (base::dir.exists(folder)){
+        if (.Platform['OS.type'] == "windows"){
+          shell.exec(folder)
+        } else {
+          system2("open", folder)
+        }
+      } else {
+        shinyalert::shinyalert(
+          "Non-existing folder", "It seems that the folder you are trying to open does not exist. Did you already export files in it?",
+          type = "error"
         )
       }
     })
