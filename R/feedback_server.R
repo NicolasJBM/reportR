@@ -88,6 +88,7 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
     modrval <- shiny::reactiveValues()
     
     shiny::observe({
+      
       shiny::req(!base::is.na(test()$test[1]))
       test_name <- test()$test[1]
       test_path <- course_paths()$subfolders$tests |>
@@ -294,8 +295,9 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
         }
         shinyalert::shinyalert(
           "Feedback templates imported!",
-          "Templates of feedback have been added to your test. Cycle through students to see them.",
-          type = "success", closeOnEsc = FALSE, closeOnClickOutside = TRUE
+          "Templates of feedback have been added to your test.",
+          type = "success", closeOnEsc = FALSE, closeOnClickOutside = TRUE,
+          inputId = "refreshfeedbackpath"
         )
       } else {
         shinyalert::shinyalert(
@@ -327,6 +329,11 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
     
     ############################################################################
     # Edition
+    shiny::observeEvent(input$refreshfeedbackpath, {
+      modrval$feedback_files <- modrval$test_path |>
+        base::paste0("/9_feedback") |>
+        base::list.files()
+    })
     
     feedback_file_path <- shiny::reactive({
       shiny::req(base::length(modrval$feedback_files) > 0)
@@ -382,7 +389,6 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       shiny::req(!base::is.null(modrval$question_grades))
       shiny::req(!base::is.null(modrval$student_grades))
       shiny::req(!base::is.null(feedback_file_path()))
-      shiny::req(base::file.exists(feedback_file_path()))
       shiny::req(!base::is.null(selected_student()))
       shiny::req(!base::is.null(selected_attempt()))
       
@@ -457,12 +463,12 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
     
     output$preview_feedback <- shiny::renderUI({
       shiny::req(!base::is.null(feedback_data()))
-      shiny::req(base::length(feedback_data()) == 2)
       shiny::req(!base::is.null(modrval$students))
       shiny::req(!base::is.null(selected_student()))
       shiny::req(!base::is.null(selected_attempt()))
       input$refreshfeedback
       input$refreshpreview
+      input$refreshfeedbackpath #Still does not refresh everything when adding a feedback file.
       student <- modrval$students |>
         dplyr::filter(student == selected_student())
       studentid <- student$student[1]
