@@ -81,6 +81,7 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
     question_grade <- NULL
     item_earned <- NULL
     page_title <- NULL
+    team <- NULL
     
     ############################################################################
     # Load
@@ -99,14 +100,12 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       
       modrval$textbook <- tree()$textbook
       
-      test_parameters <- test_path |>
-        base::paste0("/test_parameters.RData")
+      test_parameters <- base::paste0(test_path, "/test_parameters.RData")
       shiny::req(base::file.exists(test_parameters))
       base::load(test_parameters)
       modrval$test_parameters <- test_parameters
       
-      solutions <- test_path |>
-        base::paste0("/4_solutions") |>
+      solutions <- base::paste0(test_path, "/4_solutions") |>
         base::list.files(full.names = TRUE)
       shiny::req(base::length(solutions) > 0)
       modrval$solutions <- tibble::tibble(path = solutions) |>
@@ -115,40 +114,64 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
         })) |>
         tidyr::unnest(solutions)
       
-      students <- test_path |>
-        base::paste0("/6_students/student_list.csv")
+      students <- base::paste0(test_path, "/6_students/student_list.csv")
       shiny::req(base::file.exists(students))
-      modrval$students <- students |>
-        readr::read_csv(col_types = "ccccc")
+      students <- readr::read_csv(students, col_types = "ccccc")
+      modrval$students <- students
       
-      answers <- test_path |>
-        base::paste0("/8_results/answers.csv")
+      team_to_student <- students |>
+        dplyr::select(team, student) |>
+        base::unique()
+      testunit <- test_parameters$test_unit[1]
+      
+      answers <- base::paste0(test_path, "/8_results/answers.csv")
       shiny::req(base::file.exists(answers))
-      modrval$answers <- answers |>
-        readr::read_csv(col_types = "cncccn")
+      answers <- readr::read_csv(answers, col_types = "cncccn")
+      if (testunit != "student"){
+        answers <- answers |>
+          dplyr::rename(team = student) |>
+          dplyr::left_join(team_to_student, by = "team") |>
+          dplyr::select(student, -team, dplyr::everything())
+      }
+      modrval$answers <- answers
       
-      results <- test_path |>
-        base::paste0("/8_results/results.csv")
+      results <- base::paste0(test_path, "/8_results/results.csv")
       shiny::req(base::file.exists(results))
-      modrval$results <- results |>
-          readr::read_csv(col_types = "cnccnccccnnnnnnn")
+      results <- readr::read_csv(results, col_types = "cnccnccccnnnnnnn")
+      if (testunit != "student"){
+        results <- results |>
+          dplyr::rename(team = student) |>
+          dplyr::left_join(team_to_student, by = "team") |>
+          dplyr::select(student, -team, dplyr::everything())
+      }
+      modrval$results <- results
       
       modrval$selection_basis <- modrval$results |>
         dplyr::select(student, attempt, language = version) |>
         dplyr::mutate(language = stringr::str_extract_all(language, "^..", simplify = TRUE)) |>
         base::unique()
       
-      question_grades <- test_path |>
-        base::paste0("/8_results/question_grades.csv")
-      shiny::req(base::file.exists(results))
-      modrval$question_grades <- question_grades |>
-        readr::read_csv(col_types = "cncnn")
+      question_grades <- base::paste0(test_path, "/8_results/question_grades.csv")
+      shiny::req(base::file.exists(question_grades))
+      question_grades <- readr::read_csv(question_grades, col_types = "cncnn")
+      if (testunit != "student"){
+        question_grades <- question_grades |>
+          dplyr::rename(team = student) |>
+          dplyr::left_join(team_to_student, by = "team") |>
+          dplyr::select(student, -team, dplyr::everything())
+      }
+      modrval$question_grades <- question_grades
       
-      student_grades <- test_path |>
-        base::paste0("/8_results/student_grades.csv")
+      student_grades <- base::paste0(test_path, "/8_results/student_grades.csv")
       shiny::req(base::file.exists(student_grades))
-      modrval$student_grades <- student_grades |>
-        readr::read_csv(col_types = "cnnn")
+      student_grades <- readr::read_csv(student_grades, col_types = "cnnn")
+      if (testunit != "student"){
+        student_grades <- student_grades |>
+          dplyr::rename(team = student) |>
+          dplyr::left_join(team_to_student, by = "team") |>
+          dplyr::select(student, -team, dplyr::everything())
+      }
+      modrval$student_grades <- student_grades
       
       templates <- course_paths()$subfolders$templates_report |>
         base::list.files()
@@ -385,6 +408,7 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       shiny::req(!base::is.null(modrval$documents))
       shiny::req(!base::is.null(modrval$textbook))
       shiny::req(!base::is.null(modrval$solutions))
+      shiny::req(!base::is.null(modrval$students))
       shiny::req(!base::is.null(modrval$results))
       shiny::req(!base::is.null(modrval$question_grades))
       shiny::req(!base::is.null(modrval$student_grades))
@@ -395,7 +419,8 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       test <- modrval$student_grades |>
         dplyr::select(student, attempt, grade) |>
         base::unique() |>
-        dplyr::mutate(points = modrval$test_parameters$test_points[1])
+        dplyr::mutate(points = modrval$test_parameters$test_points[1]) |>
+        dplyr::select(student, attempt, points, grade)
       
       results <- modrval$results |>
         dplyr::select(
