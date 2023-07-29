@@ -175,7 +175,8 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       
       templates <- course_paths()$subfolders$templates_report |>
         base::list.files()
-      modrval$feedback_templates <- templates[stringr::str_detect(templates, "^feedback_")]
+      templates <- templates[stringr::str_detect(templates, "^feedback_")]
+      modrval$feedback_templates <- templates[stringr::str_detect(templates, "Rmd$")]
       
       modrval$feedback_files <- test_path |>
         base::paste0("/9_feedback") |>
