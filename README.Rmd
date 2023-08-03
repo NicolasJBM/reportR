@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # reportR
 
 <!-- badges: start -->
+[![DOI](https://zenodo.org/badge/532190956.svg)](https://zenodo.org/badge/latestdoi/532190956)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/reportR)](https://CRAN.R-project.org/package=reportR)
 [![R-CMD-check](https://github.com/NicolasJBM/reportR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/NicolasJBM/reportR/actions/workflows/R-CMD-check.yaml)
