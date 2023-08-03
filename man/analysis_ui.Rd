@@ -9,9 +9,6 @@ analysis_ui(id)
 \arguments{
 \item{id}{Character. ID of the module to connect the user interface to the appropriate server side.}
 }
-\value{
-A quarto document which can be rendered in different formats.
-}
 \description{
 Module allowing the user to analyse data about teaching, learning, and testing materials.
 }

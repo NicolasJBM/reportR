@@ -13,9 +13,6 @@ analysis_server(id, course_paths, references)
 
 \item{references}{Reactive. Function containing a list of references.}
 }
-\value{
-A quarto document which can be rendered in different formats.
-}
 \description{
 Module allowing the user to analyse data about teaching, learning, and testing materials.
 }

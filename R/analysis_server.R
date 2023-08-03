@@ -5,7 +5,42 @@
 #' @param id Character. ID of the module to connect the user interface to the appropriate server side.
 #' @param course_paths Reactive. Function containing a list of paths to the different folders and databases on local disk.
 #' @param references Reactive. Function containing a list of references.
-#' @return A quarto document which can be rendered in different formats.
+#' @importFrom bibliogR make_bib_file
+#' @importFrom dplyr filter
+#' @importFrom dplyr left_join
+#' @importFrom dplyr mutate
+#' @importFrom dplyr select
+#' @importFrom quarto quarto_render
+#' @importFrom rstudioapi navigateToFile
+#' @importFrom shiny NS
+#' @importFrom shiny actionButton
+#' @importFrom shiny addResourcePath
+#' @importFrom shiny column
+#' @importFrom shiny fluidRow
+#' @importFrom shiny icon
+#' @importFrom shiny isolate
+#' @importFrom shiny modalButton
+#' @importFrom shiny modalDialog
+#' @importFrom shiny moduleServer
+#' @importFrom shiny observe
+#' @importFrom shiny observeEvent
+#' @importFrom shiny reactive
+#' @importFrom shiny removeModal
+#' @importFrom shiny renderUI
+#' @importFrom shiny req
+#' @importFrom shiny selectInput
+#' @importFrom shiny showModal
+#' @importFrom shiny tagList
+#' @importFrom shiny textInput
+#' @importFrom shiny updateSelectInput
+#' @importFrom shinyAce aceEditor
+#' @importFrom shinyalert shinyalert
+#' @importFrom shinybusy remove_modal_spinner
+#' @importFrom shinybusy show_modal_spinner
+#' @importFrom shinydashboardPlus box
+#' @importFrom stringr str_detect
+#' @importFrom stringr str_replace_all
+#' @importFrom tibble tribble
 #' @export
 
 

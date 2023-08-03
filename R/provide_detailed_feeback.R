@@ -1,22 +1,24 @@
 #' @name provide_detailed_feeback
-#' @title Table providing feedback on closed questions
+#' @title Provide detailed feedback.
 #' @author Nicolas Mangin
-#' @description Function formatting the feedback about multiple choice questions into a HTML table.
+#' @description Function formatting the feedback about any type of questions into a HTML table which can be embedded in an e-mail to be sent to the selected student.
 #' @param details Tibble. Feedback recorded for all items of all versions of all questions.
 #' @param studentid Character. ID of the student.
 #' @param labels List. Names for axes and legends (for translations purposes)
-#' @return HTML code Individual feedback properly formatted
+#' @return HTML code of the Individual feedback properly formatted in a table.
 #' @importFrom dplyr case_when
 #' @importFrom dplyr filter
 #' @importFrom dplyr group_by
-#' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
 #' @importFrom dplyr select
-#' @importFrom dplyr summarise
 #' @importFrom kableExtra column_spec
 #' @importFrom kableExtra kable_styling
 #' @importFrom kableExtra kbl
+#' @importFrom kableExtra pack_rows
 #' @importFrom kableExtra spec_color
+#' @importFrom purrr map_int
+#' @importFrom tibble rowid_to_column
+#' @importFrom tidyr nest
 #' @export
 
 
@@ -93,7 +95,7 @@ provide_detailed_feeback <- function(
   
   display_table <- display_table |>
     kableExtra::kbl(format = "html", align = "lcccll") |>
-    kableExtra::kable_styling(bootstrap_options = c("striped")) |>
+    kableExtra::kable_styling(bootstrap_options = "striped") |>
     kableExtra::column_spec(1, width = "30%") |>
     kableExtra::column_spec(2, width = "2%", bold = TRUE) |>
     kableExtra::column_spec(
@@ -155,7 +157,7 @@ provide_detailed_feeback <- function(
       f = purrr::map_int(data, function(x) base::min(x$item_rank)),
       l = purrr::map_int(data, function(x) base::max(x$item_rank))
     )
-  for (i in 1:base::nrow(group_questions)){
+  for (i in base::seq_len(base::nrow(group_questions))){
     display_table <- display_table |>
       kableExtra::pack_rows(
         group_questions$text[i], group_questions$f[i], group_questions$l[i],

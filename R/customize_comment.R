@@ -6,7 +6,6 @@
 #' @param structure Tibble. Variables: threshold, status, color, and comment. Comment is not necessary.
 #' @return character. Comments adapted to the grade obtained by the student.
 #' @importFrom dplyr filter
-#' @importFrom tibble tibble
 #' @export
 
 

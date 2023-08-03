@@ -3,7 +3,15 @@
 #' @author Nicolas Mangin
 #' @description Module allowing the user to analyse data about teaching, learning, and testing materials.
 #' @param id Character. ID of the module to connect the user interface to the appropriate server side.
-#' @return A quarto document which can be rendered in different formats.
+#' @importFrom shiny NS
+#' @importFrom shiny actionButton
+#' @importFrom shiny column
+#' @importFrom shiny fluidRow
+#' @importFrom shiny icon
+#' @importFrom shiny selectInput
+#' @importFrom shiny uiOutput
+#' @importFrom shinyWidgets switchInput
+#' @importFrom shinydashboardPlus box
 #' @export
 
 

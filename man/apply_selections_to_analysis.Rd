@@ -11,11 +11,8 @@ apply_selections_to_analysis(selections, analysis_path)
 
 \item{analysis_path}{Character. Path to the folder containing the analysis.}
 }
-\value{
-Write the selections in the quarto document.
-}
 \description{
-Function updating the relevant selections filters in the selected quarto document.
+Function updating the relevant selections in the selected quarto document.
 }
 \author{
 Nicolas Mangin

@@ -1,10 +1,13 @@
 #' @name apply_selections_to_analysis
 #' @title Change selections and filters
 #' @author Nicolas Mangin
-#' @description Function updating the relevant selections filters in the selected quarto document.
+#' @description Function updating the relevant selections in the selected quarto document.
 #' @param selections Character vector. Selected tree, language, student, test, and question.
 #' @param analysis_path Character. Path to the folder containing the analysis.
-#' @return Write the selections in the quarto document.
+#' @importFrom dplyr mutate
+#' @importFrom dplyr select
+#' @importFrom stringr str_locate
+#' @importFrom tibble rowid_to_column
 #' @export
 
 

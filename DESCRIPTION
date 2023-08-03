@@ -1,6 +1,5 @@
 Package: reportR
-Type: Package
-Title: Toolbox to create feedback and analyzes
+Title: Provide feedback and analyze
 Version: 1.1
 Date: 2020-08-22
 Authors@R: 
@@ -16,24 +15,27 @@ Depends: R (>= 3.6)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports:
+  bibliogR,
   dplyr,
-  knitr,
-  purrr,
-  readr,
+  quarto,
   rstudioapi,
   shiny,
   shinyAce,
-  shinyWidgets,
   shinyalert,
+  shinybusy,
+  shinydashboardPlus,
   stringr,
   tibble,
-  tidyr,
-  shinydashboardPlus,
-  kableExtra,
-  gmailr,
+  shinyWidgets,
   blastula,
-  shinybusy,
-  quarto,
   editR,
-  bibliogR
+  gmailr,
+  knitr,
+  purrr,
+  readr,
+  tidyr,
+  kableExtra
+Remotes:
+  NicolasJBM/editR,
+  NicolasJBM/bibliogR
   

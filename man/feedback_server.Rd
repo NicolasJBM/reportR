@@ -17,11 +17,8 @@ feedback_server(id, test, tree, course_data, course_paths)
 
 \item{course_paths}{Reactive. Function containing a list of paths to the different folders and databases on local disk.}
 }
-\value{
-Save the feedback in "9_feedback" and allows individualizing and sending it to a list of recipients.
-}
 \description{
-Module allowing the user to grade and calibrate tests.
+Module facilitating the quick creation or modification of individual feedback.
 }
 \author{
 Nicolas Mangin

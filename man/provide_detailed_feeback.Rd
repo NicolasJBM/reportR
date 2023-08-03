@@ -2,7 +2,7 @@
 % Please edit documentation in R/provide_detailed_feeback.R
 \name{provide_detailed_feeback}
 \alias{provide_detailed_feeback}
-\title{Table providing feedback on closed questions}
+\title{Provide detailed feedback.}
 \usage{
 provide_detailed_feeback(
   details,
@@ -20,10 +20,10 @@ provide_detailed_feeback(
 \item{labels}{List. Names for axes and legends (for translations purposes)}
 }
 \value{
-HTML code Individual feedback properly formatted
+HTML code of the Individual feedback properly formatted in a table.
 }
 \description{
-Function formatting the feedback about multiple choice questions into a HTML table.
+Function formatting the feedback about any type of questions into a HTML table which can be embedded in an e-mail to be sent to the selected student.
 }
 \author{
 Nicolas Mangin

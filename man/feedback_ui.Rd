@@ -2,18 +2,15 @@
 % Please edit documentation in R/feedback_ui.R
 \name{feedback_ui}
 \alias{feedback_ui}
-\title{Edit feedbacks}
+\title{Edit feedback}
 \usage{
 feedback_ui(id)
 }
 \arguments{
 \item{id}{Character. ID of the module to connect the user interface to the appropriate server side.}
 }
-\value{
-Save the feedback in "9_feedback" and allows individualizing and sending it to a list of recipients.
-}
 \description{
-Module facilitating the quick creation or modification of individual feedback or course analyses.
+Module facilitating the quick creation or modification of individual feedback.
 }
 \author{
 Nicolas Mangin

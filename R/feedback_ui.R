@@ -1,15 +1,16 @@
 #' @name feedback_ui
-#' @title Edit feedbacks
+#' @title Edit feedback
 #' @author Nicolas Mangin
-#' @description Module facilitating the quick creation or modification of individual feedback or course analyses.
+#' @description Module facilitating the quick creation or modification of individual feedback.
 #' @param id Character. ID of the module to connect the user interface to the appropriate server side.
-#' @return Save the feedback in "9_feedback" and allows individualizing and sending it to a list of recipients.
 #' @importFrom editR selection_ui
 #' @importFrom shiny NS
 #' @importFrom shiny actionButton
 #' @importFrom shiny column
 #' @importFrom shiny fluidRow
 #' @importFrom shiny icon
+#' @importFrom shiny textAreaInput
+#' @importFrom shiny textInput
 #' @importFrom shiny uiOutput
 #' @importFrom shinydashboardPlus box
 #' @export

@@ -1,17 +1,30 @@
 #' @name feedback_server
 #' @title Edit feedbacks
 #' @author Nicolas Mangin
-#' @description Module allowing the user to grade and calibrate tests.
+#' @description Module facilitating the quick creation or modification of individual feedback.
 #' @param id Character. ID of the module to connect the user interface to the appropriate server side.
 #' @param test Reactive. Selected test.
 #' @param tree Reactive. Function containing a list of documents as a classification tree compatible with jsTreeR.
 #' @param course_data Reactive. Function containing all the course data loaded with the course.
 #' @param course_paths Reactive. Function containing a list of paths to the different folders and databases on local disk.
-#' @return Save the feedback in "9_feedback" and allows individualizing and sending it to a list of recipients.
+#' @importFrom blastula creds_file
+#' @importFrom blastula render_email
+#' @importFrom blastula smtp_send
+#' @importFrom dplyr everything
 #' @importFrom dplyr filter
+#' @importFrom dplyr left_join
 #' @importFrom dplyr mutate
+#' @importFrom dplyr rename
 #' @importFrom dplyr select
+#' @importFrom dplyr starts_with
 #' @importFrom editR selection_server
+#' @importFrom gmailr gm_auth_configure
+#' @importFrom gmailr gm_from
+#' @importFrom gmailr gm_html_body
+#' @importFrom gmailr gm_mime
+#' @importFrom gmailr gm_send_message
+#' @importFrom gmailr gm_subject
+#' @importFrom gmailr gm_to
 #' @importFrom knitr knit2html
 #' @importFrom purrr map
 #' @importFrom readr read_csv
@@ -37,6 +50,11 @@
 #' @importFrom shinyAce aceEditor
 #' @importFrom shinyWidgets radioGroupButtons
 #' @importFrom shinyalert shinyalert
+#' @importFrom shinybusy remove_modal_progress
+#' @importFrom shinybusy remove_modal_spinner
+#' @importFrom shinybusy show_modal_progress_line
+#' @importFrom shinybusy show_modal_spinner
+#' @importFrom shinybusy update_modal_progress
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_extract
 #' @importFrom stringr str_extract_all

@@ -1,10 +1,14 @@
 #' @name retrieve_data_for_analysis
-#' @title Analyse data
+#' @title Get analyzed data
 #' @author Nicolas Mangin
 #' @description Function copying and pasting required databases in the data folder of the selected analysis.
 #' @param analysis_path Character. Path to the folder containing the analysis.
 #' @param course_paths List. List of paths to the different folders and databases on local disk.
-#' @return A quarto document which can be rendered in different formats.
+#' @importFrom dplyr filter
+#' @importFrom dplyr mutate
+#' @importFrom stringr str_remove_all
+#' @importFrom tibble tibble
+#' @importFrom tidyr separate
 #' @export
 
 
