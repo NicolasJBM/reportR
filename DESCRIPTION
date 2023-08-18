@@ -1,6 +1,6 @@
 Package: reportR
 Title: Provide feedback and analyze
-Version: 1.1
+Version: 1.3.0
 Date: 2020-08-22
 Authors@R: 
     person(given = "Nicolas",
