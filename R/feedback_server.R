@@ -123,9 +123,24 @@ feedback_server <- function(id, test, tree, course_data, course_paths){
       base::load(test_parameters)
       modrval$test_parameters <- test_parameters
       
-      solutions <- base::paste0(test_path, "/4_solutions") |>
-        base::list.files(full.names = TRUE)
-      shiny::req(base::length(solutions) > 0)
+      # Check that at least some solutions have been created
+      solutions_files <- base::paste0(test_path, "/4_solutions") |>
+        base::list.files(full.names = FALSE)
+      shiny::req(base::length(solutions_files) > 0)
+      
+      # Check that answers have been imported
+      answers_files <- base::paste0(test_path, "/7_answers") |>
+        base::list.files(full.names = FALSE, recursive = TRUE)
+      shiny::req(base::length(answers_files) > 0)
+      
+      # Check that answers have been imported
+      results_files <- base::paste0(test_path, "/8_results") |>
+        base::list.files(full.names = FALSE, recursive = TRUE)
+      shiny::req(base::length(results_files) > 1)
+      
+      solutions <- base::list.files(base::paste0(
+        test_path, "/4_solutions"
+      ), full.names = TRUE)
       modrval$solutions <- tibble::tibble(path = solutions) |>
         dplyr::mutate(solutions = purrr::map(path, function(x){
           readr::read_csv(x, col_types = "ccncccccnccncccnn")
