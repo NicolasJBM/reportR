@@ -401,6 +401,28 @@ analysis_server <- function(id, course_paths, references){
       )
     })
     
+    
+    
+    
+    shiny::observeEvent(input$updateanalytics, {
+      
+      
+      shinybusy::show_modal_progress_line(value = 0/2, text = "Updating analytics")
+      
+      shinybusy::update_modal_progress(value = 1/2, text = "Updating tests")
+      
+      
+      shinybusy::update_modal_progress(value = 2/2, text = "Analytics updated")
+      shinybusy::remove_modal_spinner()
+      
+      shinyalert::shinyalert(
+        title = "Analytics updated!",
+        text = "Reload the cours to see the results.",
+        type = "success"
+      )
+      
+    })
+    
   })
 }
 
